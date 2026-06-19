@@ -1,4 +1,4 @@
-# Practica de Formularios C#
+# Practica de Avalonia
 
 * **Nombre:** Rodrigo Carballo
 * **NIE:** 19795362
