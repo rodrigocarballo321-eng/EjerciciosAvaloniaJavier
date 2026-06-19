@@ -1,0 +1,149 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="820"
+        x:Class="SolicitudD_CreditoR.MainWindow"
+        Width="700" Height="820"
+        RequestedThemeVariant="Light"
+        Background="#FAFAFA"
+        Title="CoopAgro El Triunfo — Solicitud de crédito">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.section">
+            <Setter Property="Foreground" Value="#6D28D9"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,16,0,8"/>
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style Selector="TextBlock.hint">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="#6B6B6B"/>
+            <Setter Property="Margin" Value="0,3,0,0"/>
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#6D28D9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="22,9"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#5B21B6"/>
+        </Style>
+    </Window.Styles>
+
+    <ScrollViewer>
+        <StackPanel Margin="28,22">
+            <TextBlock Text="Nueva solicitud de crédito" FontSize="22" FontWeight="Bold" Foreground="#1A1A1A"/>
+            <TextBlock Text="Calculadora de cuota y captura de la solicitud del socio."
+                       FontSize="12" Foreground="#6B6B6B" Margin="0,4,0,4"/>
+
+            <TextBlock Classes="section" Text="DATOS DEL SOCIO"/>
+            <Grid ColumnDefinitions="*,14,*">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Classes="label" Text="Código de socio *"/>
+                    <TextBox x:Name="CodigoBox" PlaceholderText="CAS-00000" LostFocus="OnCodigoLostFocus"/>
+                    <TextBlock Classes="hint" Text="Ej. CAS-00342 · CAS-00118"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Classes="label" Text="Nombre completo"/>
+                    <TextBox x:Name="NombreBox" IsReadOnly="True" Background="#F3F0FF" Foreground="#6B6B6B"/>
+                    <TextBlock Classes="hint" Text="Auto-completado al ingresar código"/>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Classes="section" Text="MONTO Y PLAZO"/>
+            <TextBlock Classes="label" Text="Monto solicitado *"/>
+            <Grid ColumnDefinitions="*,14,140" VerticalAlignment="Center">
+                <StackPanel Grid.Column="0">
+                    <Slider x:Name="MontoSlider" Minimum="200" Maximum="5000"
+                            TickFrequency="50" IsSnapToTickEnabled="True"/>
+                    <Grid ColumnDefinitions="*,*">
+                        <TextBlock Grid.Column="0" Text="$ 200" FontSize="11" Foreground="#6B6B6B"/>
+                        <TextBlock Grid.Column="1" Text="$ 5,000" FontSize="11" Foreground="#6B6B6B"
+                                   HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+                <TextBox Grid.Column="2" x:Name="MontoBox" FontWeight="Bold"
+                         TextAlignment="Right" VerticalAlignment="Top" LostFocus="OnMontoBoxLostFocus"/>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,14,*" Margin="0,12,0,0">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Classes="label" Text="Plazo *"/>
+                    <ComboBox x:Name="PlazoCombo" HorizontalAlignment="Stretch" SelectionChanged="OnPlazoChanged">
+                        <ComboBoxItem>6 meses</ComboBoxItem>
+                        <ComboBoxItem>12 meses</ComboBoxItem>
+                        <ComboBoxItem>24 meses</ComboBoxItem>
+                        <ComboBoxItem>36 meses</ComboBoxItem>
+                        <ComboBoxItem>48 meses</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Classes="label" Text="Tasa de interés anual"/>
+                    <TextBox x:Name="TasaBox" Text="12.00%" IsReadOnly="True"
+                             Background="#F3F0FF" Foreground="#6B6B6B"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Resumen calculado -->
+            <Border CornerRadius="6" Padding="18" Margin="0,14,0,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                        <GradientStop Color="#6D28D9" Offset="0"/>
+                        <GradientStop Color="#4C1D95" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel>
+                    <TextBlock Text="CUOTA MENSUAL PROYECTADA" FontSize="11" Foreground="#D8C8FF"/>
+                    <TextBlock x:Name="CuotaText" Text="$ 0.00" FontSize="32" FontWeight="Bold"
+                               Foreground="White" Margin="0,2,0,0"/>
+                    <StackPanel Orientation="Horizontal" Spacing="24" Margin="0,10,0,0">
+                        <TextBlock x:Name="TotalText" Text="Total a pagar: $ 0.00" FontSize="12" Foreground="#E5DBFF"/>
+                        <TextBlock x:Name="InteresText" Text="Intereses: $ 0.00" FontSize="12" Foreground="#E5DBFF"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Classes="section" Text="DESTINO DEL CRÉDITO"/>
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                <CheckBox Grid.Row="0" Grid.Column="0" x:Name="Dest1" Content="Insumos agrícolas (fertilizantes, semillas)"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" x:Name="Dest2" Content="Adquisición de ganado"/>
+                <CheckBox Grid.Row="1" Grid.Column="0" x:Name="Dest3" Content="Maquinaria y herramientas"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" x:Name="Dest4" Content="Mejora de infraestructura"/>
+                <CheckBox Grid.Row="2" Grid.Column="0" x:Name="Dest5" Content="Capital de trabajo"/>
+                <CheckBox Grid.Row="2" Grid.Column="1" x:Name="Dest6" Content="Otro" IsCheckedChanged="OnOtroDestinoChanged"/>
+            </Grid>
+            <StackPanel x:Name="OtroDestinoPanel" IsVisible="False" Margin="0,8,0,0">
+                <TextBlock Classes="label" Text="Especifica el destino *"/>
+                <TextBox x:Name="OtroDestinoBox"/>
+            </StackPanel>
+
+            <StackPanel Margin="0,14,0,0">
+                <TextBlock Classes="label" Text="Justificación del destino"/>
+                <TextBox x:Name="JustificacionBox" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="70"
+                         PlaceholderText="Mínimo 30 caracteres · describe el uso del crédito"/>
+            </StackPanel>
+
+            <ToggleSwitch x:Name="ReglamentoSwitch" IsChecked="True" Margin="0,12,0,0"
+                          OnContent="Acepto el reglamento de crédito de la cooperativa"
+                          OffContent="Acepto el reglamento de crédito de la cooperativa"/>
+
+            <Border x:Name="StatusBox" IsVisible="False" CornerRadius="4" Padding="12,9" Margin="0,12,0,0">
+                <TextBlock x:Name="StatusText" TextWrapping="Wrap" FontWeight="SemiBold"/>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,18,0,0">
+                <Button Content="Cancelar" Click="OnCancelar"/>
+                <Button Content="Guardar borrador" Click="OnGuardarBorrador"/>
+                <Button Content="Enviar solicitud" Classes="primary" Click="OnEnviar"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

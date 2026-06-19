@@ -1,0 +1,133 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="820"
+        x:Class="ReporteCiudadano_R.MainWindow"
+        Width="700" Height="820"
+        RequestedThemeVariant="Light"
+        Background="#FAFAFA"
+        Title="Alcaldía de Colón — Atención ciudadana">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.section">
+            <Setter Property="Foreground" Value="#6D28D9"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,16,0,8"/>
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#6D28D9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="22,9"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#5B21B6"/>
+        </Style>
+        <Style Selector="ToggleButton.card">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="ToggleButton.card:checked">
+            <Setter Property="BorderBrush" Value="#6D28D9"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <Style Selector="ToggleButton.card:checked /template/ ContentPresenter">
+            <Setter Property="Background" Value="#F3F0FF"/>
+        </Style>
+    </Window.Styles>
+
+    <ScrollViewer>
+        <StackPanel Margin="28,22">
+            <TextBlock Text="Reportar un incidente" FontSize="22" FontWeight="Bold" Foreground="#1A1A1A"/>
+            <TextBlock Text="Cuéntanos qué pasa. La alcaldía dará seguimiento en máximo 5 días hábiles."
+                       FontSize="12" Foreground="#6B6B6B" Margin="0,4,0,4"/>
+
+            <TextBlock Classes="section" Text="¿QUÉ TIPO DE INCIDENTE REPORTAS?"/>
+            <UniformGrid x:Name="CardsPanel" Columns="3"/>
+
+            <StackPanel x:Name="OtroTipoPanel" IsVisible="False" Margin="0,8,0,0">
+                <TextBlock Classes="label" Text="Describe el tipo de incidente *"/>
+                <TextBox x:Name="OtroTipoBox"/>
+            </StackPanel>
+
+            <TextBlock Classes="section" Text="¿DÓNDE ESTÁ EL PROBLEMA?"/>
+            <Grid ColumnDefinitions="*,8,Auto">
+                <TextBox Grid.Column="0" x:Name="DireccionBox"
+                         PlaceholderText="Dirección o referencia del lugar"/>
+                <Button Grid.Column="2" x:Name="GpsBtn" Content="📍 Usar GPS" Click="OnGps"/>
+            </Grid>
+
+            <TextBlock Classes="section" Text="¿QUÉ TAN GRAVE ES?"/>
+            <Grid ColumnDefinitions="Auto,12,*,12,Auto" VerticalAlignment="Center">
+                <TextBlock Grid.Column="0" Text="Leve" FontSize="11" FontWeight="SemiBold"
+                           Foreground="#6B6B6B" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                    <Border x:Name="Bar1" Width="44" Height="8" CornerRadius="4" Background="#E0E0E0"/>
+                    <Border x:Name="Bar2" Width="44" Height="8" CornerRadius="4" Background="#E0E0E0"/>
+                    <Border x:Name="Bar3" Width="44" Height="8" CornerRadius="4" Background="#E0E0E0"/>
+                    <Border x:Name="Bar4" Width="44" Height="8" CornerRadius="4" Background="#E0E0E0"/>
+                    <Border x:Name="Bar5" Width="44" Height="8" CornerRadius="4" Background="#E0E0E0"/>
+                </StackPanel>
+                <TextBlock Grid.Column="4" Text="Urgente" FontSize="11" FontWeight="SemiBold"
+                           Foreground="#6B6B6B" VerticalAlignment="Center"/>
+            </Grid>
+            <Slider x:Name="SeveridadSlider" Minimum="1" Maximum="5" Value="3"
+                    TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,6,0,0"/>
+            <TextBlock x:Name="SeveridadLabel" Text="Moderado" FontSize="18" FontWeight="Bold"
+                       Foreground="#F59E0B" HorizontalAlignment="Center"/>
+
+            <TextBlock Classes="section" Text="FOTO DEL INCIDENTE (OPCIONAL)"/>
+            <Border BorderBrush="#D4D4D4" BorderThickness="2" CornerRadius="6" Background="White"
+                    Padding="24" HorizontalAlignment="Stretch">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="📷" FontSize="32" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="FotosLabel" Text="Haz clic para subir una foto"
+                               FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    <TextBlock Text="JPG, PNG · máx 5 MB · hasta 3 fotos"
+                               FontSize="11" Foreground="#6B6B6B" HorizontalAlignment="Center"/>
+                    <Button Content="Seleccionar fotos" HorizontalAlignment="Center" Margin="0,8,0,0"
+                            Click="OnSubirFotos"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Classes="section" Text="DATOS PARA SEGUIMIENTO"/>
+            <Grid ColumnDefinitions="*,14,*">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Classes="label" Text="Nombre *"/>
+                    <TextBox x:Name="NombreBox"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Classes="label" Text="Teléfono *"/>
+                    <TextBox x:Name="TelefonoBox"/>
+                </StackPanel>
+            </Grid>
+
+            <ToggleSwitch x:Name="SmsSwitch" IsChecked="True" Margin="0,8,0,0"
+                          OnContent="Quiero recibir actualizaciones por SMS"
+                          OffContent="Quiero recibir actualizaciones por SMS"/>
+
+            <Border x:Name="StatusBox" IsVisible="False" CornerRadius="4" Padding="12,9" Margin="0,12,0,0">
+                <TextBlock x:Name="StatusText" TextWrapping="Wrap" FontWeight="SemiBold"/>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,18,0,0">
+                <Button Content="Cancelar" Click="OnCancelar"/>
+                <Button Content="Enviar reporte" Classes="primary" Click="OnEnviar"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,185 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="900"
+        x:Class="Beneficiario_ONG.MainWindow"
+        Width="700" Height="860"
+        RequestedThemeVariant="Light"
+        Background="#FAFAFA"
+        Title="FundaciónSV — Nuevo beneficiario">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.section">
+            <Setter Property="Foreground" Value="#6D28D9"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,16,0,8"/>
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style Selector="TextBlock.hint">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="#6B6B6B"/>
+            <Setter Property="Margin" Value="0,3,0,0"/>
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#6D28D9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="22,9"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#5B21B6"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="Padding" Value="8,7"/>
+        </Style>
+    </Window.Styles>
+
+    <ScrollViewer>
+        <StackPanel Margin="28,22" Spacing="0">
+            <TextBlock Text="Registro de beneficiario" FontSize="22" FontWeight="Bold" Foreground="#1A1A1A"/>
+            <TextBlock Text="Datos personales y situación socioeconómica del beneficiario."
+                       FontSize="12" Foreground="#6B6B6B" Margin="0,4,0,18"/>
+
+            <TabControl>
+                <TabItem Header="Datos personales">
+                    <StackPanel Margin="0,16,0,0" Spacing="0">
+
+                        <Grid ColumnDefinitions="120,24,*">
+                            <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                <Border Width="120" Height="120" CornerRadius="60">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                            <GradientStop Color="#6D28D9" Offset="0"/>
+                                            <GradientStop Color="#C4B5FD" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <TextBlock x:Name="AvatarText" Text="?" FontSize="44" FontWeight="Bold"
+                                               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Button Content="Cambiar foto" FontSize="11" Padding="12,6"
+                                        HorizontalAlignment="Center" Margin="0,10,0,0" Click="OnCambiarFoto"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Spacing="0">
+                                <Grid ColumnDefinitions="*,14,*">
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Classes="label" Text="Nombre completo *"/>
+                                        <TextBox x:Name="NombreBox" PlaceholderText="Nombres y apellidos"
+                                                 TextChanged="OnNombreChanged"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Classes="label" Text="Documento *"/>
+                                        <TextBox x:Name="DocumentoBox" PlaceholderText="00000000-0"/>
+                                        <TextBlock Classes="hint" Text="DUI / Carnet de minoridad / Pasaporte"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid ColumnDefinitions="1.4*,16,*,16,65" Margin="0,12,0,0">
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Bottom">
+                                        <TextBlock Classes="label" Text="F. nacimiento *"/>
+                                        <DatePicker x:Name="FechaNacimiento" 
+                                                    HorizontalAlignment="Stretch" 
+                                                    VerticalAlignment="Bottom"
+                                                    SelectedDateChanged="OnFechaChanged"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Bottom">
+                                        <TextBlock Classes="label" Text="Género *"/>
+                                        <ComboBox x:Name="GeneroCombo" 
+                                                  HorizontalAlignment="Stretch"
+                                                  Height="32"
+                                                  VerticalAlignment="Bottom">
+                                            <ComboBoxItem>Femenino</ComboBoxItem>
+                                            <ComboBoxItem>Masculino</ComboBoxItem>
+                                            <ComboBoxItem>Prefiero no decir</ComboBoxItem>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Grid.Column="4" VerticalAlignment="Bottom">
+                                        <TextBlock Classes="label" Text="Edad"/>
+                                        <TextBox x:Name="EdadBox" 
+                                                 IsReadOnly="True" 
+                                                 Background="#F3F0FF"
+                                                 Foreground="#6B6B6B" 
+                                                 PlaceholderText="—"
+                                                 HorizontalAlignment="Stretch"
+                                                 Height="32"
+                                                 VerticalAlignment="Bottom"
+                                                 VerticalContentAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <StackPanel Margin="0,12,0,0">
+                                    <TextBlock Classes="label" Text="Ocupación principal"/>
+                                    <TextBox x:Name="OcupacionBox" PlaceholderText="Ej. Trabajadora doméstica"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Height="1" Background="#E0E0E0" Margin="0,22,0,0"/>
+
+                        <TextBlock Classes="section" Text="DIRECCIÓN Y CONTACTO"/>
+                        <Grid ColumnDefinitions="*,14,*">
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Classes="label" Text="Departamento *"/>
+                                <ComboBox x:Name="DepartamentoCombo" HorizontalAlignment="Stretch"
+                                          SelectionChanged="OnDepartamentoChanged"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Classes="label" Text="Municipio *"/>
+                                <ComboBox x:Name="MunicipioCombo" HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Margin="0,12,0,0">
+                            <TextBlock Classes="label" Text="Dirección detallada *"/>
+                            <TextBox x:Name="DireccionBox" AcceptsReturn="True" TextWrapping="Wrap"
+                                     MinHeight="70" PlaceholderText="Cantón, calle, número de casa y referencia"/>
+                        </StackPanel>
+
+                        <TextBlock Classes="section" Text="SITUACIÓN DE VULNERABILIDAD"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                            <CheckBox Grid.Row="0" Grid.Column="0" x:Name="Vul1" Content="Madre soltera jefa de hogar"/>
+                            <CheckBox Grid.Row="0" Grid.Column="1" x:Name="Vul2" Content="Persona con discapacidad"/>
+                            <CheckBox Grid.Row="1" Grid.Column="0" x:Name="Vul3" Content="Hogar bajo línea de pobreza"/>
+                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="Vul4" Content="Adulto mayor sin pensión"/>
+                            <CheckBox Grid.Row="2" Grid.Column="0" x:Name="Vul5" Content="Víctima de violencia intrafamiliar"/>
+                            <CheckBox Grid.Row="2" Grid.Column="1" x:Name="Vul6" Content="Persona retornada"/>
+                        </Grid>
+
+                        <ToggleSwitch x:Name="AutorizaSwitch" Margin="0,14,0,0"
+                                      OffContent="Autoriza el uso de sus datos para programas de la fundación"
+                                      OnContent="Autoriza el uso de sus datos para programas de la fundación"/>
+
+                        <Border x:Name="StatusBox" IsVisible="False" CornerRadius="4" Padding="12,9" Margin="0,12,0,0">
+                            <TextBlock x:Name="StatusText" TextWrapping="Wrap" FontWeight="SemiBold"/>
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,18,0,0">
+                            <Button Content="Cancelar" Click="OnCancelar"/>
+                            <Button Content="Guardar borrador" Click="OnGuardarBorrador"/>
+                            <Button Content="Registrar beneficiario" Classes="primary" Click="OnRegistrar"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="Familiares">
+                    <TextBlock Text="Sección de familiares (pendiente)." Margin="0,20" Foreground="#6B6B6B"/>
+                </TabItem>
+                <TabItem Header="Necesidades">
+                    <TextBlock Text="Sección de necesidades (pendiente)." Margin="0,20" Foreground="#6B6B6B"/>
+                </TabItem>
+                <TabItem Header="Programas">
+                    <TextBlock Text="Sección de programas (pendiente)." Margin="0,20" Foreground="#6B6B6B"/>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

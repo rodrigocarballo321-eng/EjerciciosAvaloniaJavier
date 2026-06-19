@@ -1,0 +1,140 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="820" d:DesignHeight="720"
+        x:Class="AGENDACITA_ClinicaR.MainWindow"
+        Width="820" Height="720"
+        RequestedThemeVariant="Light"
+        Background="#FAFAFA"
+        Title="Agendamiento de la Clinica El Canton">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.section">
+            <Setter Property="Foreground" Value="#6D28D9"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,16,0,8"/>
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style Selector="TextBlock.hint">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="#6B6B6B"/>
+            <Setter Property="Margin" Value="0,3,0,0"/>
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#6D28D9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="22,9"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#5B21B6"/>
+        </Style>
+        <!-- ToggleButton de horario -->
+        <Style Selector="ToggleButton.slot">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="4,7"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style Selector="ToggleButton.slot:checked /template/ ContentPresenter">
+            <Setter Property="Background" Value="#EDE4FF"/>
+            <Setter Property="TextElement.Foreground" Value="#6D28D9"/>
+        </Style>
+    </Window.Styles>
+
+    <ScrollViewer>
+        <StackPanel Margin="28,22">
+            <TextBlock Text="Nueva cita médica" FontSize="22" FontWeight="Bold" Foreground="#1A1A1A"/>
+            <TextBlock Text="Selecciona fecha, hora y completa los datos del paciente."
+                       FontSize="12" Foreground="#6B6B6B" Margin="0,4,0,12"/>
+
+            <Grid ColumnDefinitions="300,24,*">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Classes="section" Text="SELECCIONA FECHA" Margin="0,0,0,8"/>
+                    <Calendar x:Name="Cal" SelectedDatesChanged="OnFechaChanged"/>
+
+                    <TextBlock Classes="section" Text="HORARIOS DISPONIBLES"/>
+                    <UniformGrid x:Name="HorariosPanel" Columns="3"/>
+                    <TextBlock Classes="hint" Text="Gris tachado = ocupado · violeta = seleccionado"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Classes="section" Text="DATOS DE LA CITA" Margin="0,0,0,8"/>
+
+                    <TextBlock Classes="label" Text="Paciente *"/>
+                    <AutoCompleteBox x:Name="PacienteBox" HorizontalAlignment="Stretch"
+                                     PlaceholderText="Busca por nombre, DUI o expediente"
+                                     FilterMode="Contains"/>
+                    <TextBlock Classes="hint" Text="Busca por nombre, DUI o número de expediente"/>
+
+                    <Grid ColumnDefinitions="*,14,*" Margin="0,12,0,0">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Classes="label" Text="Médico asignado *"/>
+                            <ComboBox x:Name="MedicoCombo" HorizontalAlignment="Stretch"
+                                      SelectionChanged="OnResumenChanged">
+                                <ComboBoxItem>Dr. Henríquez</ComboBoxItem>
+                                <ComboBoxItem>Dra. Morales</ComboBoxItem>
+                                <ComboBoxItem>Dr. Cruz Pineda</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Classes="label" Text="Tipo de consulta *"/>
+                            <ComboBox x:Name="TipoCombo" HorizontalAlignment="Stretch">
+                                <ComboBoxItem>Consulta general</ComboBoxItem>
+                                <ComboBoxItem>Control general</ComboBoxItem>
+                                <ComboBoxItem>Especialidad</ComboBoxItem>
+                                <ComboBoxItem>Urgencia</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Margin="0,12,0,0">
+                        <TextBlock Classes="label" Text="Motivo de la consulta"/>
+                        <TextBox x:Name="MotivoBox" AcceptsReturn="True" TextWrapping="Wrap"
+                                 MinHeight="70" MaxLength="300"
+                                 PlaceholderText="Opcional · máximo 300 caracteres"/>
+                    </StackPanel>
+
+                    <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
+                            CornerRadius="4" Padding="14" Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="RESUMEN DE LA CITA" FontSize="11" Foreground="#6B6B6B"/>
+                            <TextBlock x:Name="ResumenFecha" Text="Selecciona fecha y hora"
+                                       FontSize="18" FontWeight="Bold" Foreground="#1A1A1A" Margin="0,4,0,2"/>
+                            <TextBlock x:Name="ResumenMedico" Text="Médico · Consultorio · Duración 30 min"
+                                       FontSize="12" Foreground="#6B6B6B"/>
+                        </StackPanel>
+                    </Border>
+
+                    <ToggleSwitch x:Name="SmsSwitch" IsChecked="True" Margin="0,12,0,0"
+                                  OnContent="Enviar recordatorio por SMS al paciente"
+                                  OffContent="Enviar recordatorio por SMS al paciente"/>
+                    <ToggleSwitch x:Name="PrimeraSwitch"
+                                  OnContent="Es la primera consulta del paciente"
+                                  OffContent="Es la primera consulta del paciente"/>
+
+                    <Border x:Name="StatusBox" IsVisible="False" CornerRadius="4" Padding="12,9" Margin="0,12,0,0">
+                        <TextBlock x:Name="StatusText" TextWrapping="Wrap" FontWeight="SemiBold"/>
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,16,0,0">
+                        <Button Content="Cancelar" Click="OnCancelar"/>
+                        <Button Content="Agendar cita" Classes="primary" Click="OnAgendar"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
+

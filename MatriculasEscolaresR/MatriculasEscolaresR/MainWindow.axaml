@@ -1,0 +1,228 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="780"
+        x:Class="MatriculasEscolaresR.MainWindow"
+        Width="700" Height="780"
+        RequestedThemeVariant="Light"
+        Background="#FAFAFA"
+        Title="Escuela San José — Matrícula 2026">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.section">
+            <Setter Property="Foreground" Value="#6D28D9"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,8,0,10"/>
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#6D28D9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="22,9"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#5B21B6"/>
+        </Style>
+    </Window.Styles>
+
+    <ScrollViewer>
+        <StackPanel Margin="28,22">
+            <TextBlock Text="Matrícula del año lectivo 2026" FontSize="22" FontWeight="Bold" Foreground="#1A1A1A"/>
+            <TextBlock Text="Completa los 4 pasos para inscribir al estudiante."
+                       FontSize="12" Foreground="#6B6B6B" Margin="0,4,0,18"/>
+
+            <!-- STEPPER -->
+            <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto" RowDefinitions="Auto,Auto" Margin="10,0,10,24">
+                <Border Grid.Row="0" Grid.Column="0" x:Name="Circle1" Width="36" Height="36" CornerRadius="18">
+                    <TextBlock x:Name="Num1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" x:Name="Line1" Height="2" VerticalAlignment="Center"/>
+                <Border Grid.Row="0" Grid.Column="2" x:Name="Circle2" Width="36" Height="36" CornerRadius="18">
+                    <TextBlock x:Name="Num2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="3" x:Name="Line2" Height="2" VerticalAlignment="Center"/>
+                <Border Grid.Row="0" Grid.Column="4" x:Name="Circle3" Width="36" Height="36" CornerRadius="18">
+                    <TextBlock x:Name="Num3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="5" x:Name="Line3" Height="2" VerticalAlignment="Center"/>
+                <Border Grid.Row="0" Grid.Column="6" x:Name="Circle4" Width="36" Height="36" CornerRadius="18">
+                    <TextBlock x:Name="Num4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Border>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" x:Name="Lbl1" Text="Estudiante" FontSize="11"
+                           HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" x:Name="Lbl2" Text="Acudiente" FontSize="11"
+                           HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="4" x:Name="Lbl3" Text="Documentos" FontSize="11"
+                           HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="6" x:Name="Lbl4" Text="Confirmación" FontSize="11"
+                           HorizontalAlignment="Center" Margin="0,6,0,0"/>
+            </Grid>
+
+            <StackPanel x:Name="Step1">
+                <TextBlock Classes="section" Text="PASO 1 · DATOS DEL ESTUDIANTE"/>
+                <Grid ColumnDefinitions="*,14,*">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Classes="label" Text="Nombres *"/>
+                        <TextBox x:Name="E_Nombres"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Classes="label" Text="Apellidos *"/>
+                        <TextBox x:Name="E_Apellidos"/>
+                    </StackPanel>
+                </Grid>
+                <Grid ColumnDefinitions="*,14,*" Margin="0,10,0,0">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Classes="label" Text="Fecha de nacimiento *"/>
+                        <DatePicker x:Name="E_Fecha"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Classes="label" Text="DUI / Carnet de minoridad *"/>
+                        <TextBox x:Name="E_Documento"/>
+                    </StackPanel>
+                </Grid>
+                <Grid ColumnDefinitions="*,14,*" Margin="0,10,0,0">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Classes="label" Text="Género *"/>
+                        <ComboBox x:Name="E_Genero" HorizontalAlignment="Stretch">
+                            <ComboBoxItem>Femenino</ComboBoxItem>
+                            <ComboBoxItem>Masculino</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Classes="label" Text="Grado a matricular *"/>
+                        <ComboBox x:Name="E_Grado" HorizontalAlignment="Stretch">
+                            <ComboBoxItem>Parvularia</ComboBoxItem>
+                            <ComboBoxItem>1° grado</ComboBoxItem>
+                            <ComboBoxItem>2° grado</ComboBoxItem>
+                            <ComboBoxItem>3° grado</ComboBoxItem>
+                            <ComboBoxItem>4° grado</ComboBoxItem>
+                            <ComboBoxItem>5° grado</ComboBoxItem>
+                            <ComboBoxItem>6° grado</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Classes="label" Text="Sección preferida"/>
+                    <ComboBox x:Name="E_Seccion" HorizontalAlignment="Stretch">
+                        <ComboBoxItem>Sección A</ComboBoxItem>
+                        <ComboBoxItem>Sección B</ComboBoxItem>
+                        <ComboBoxItem>Sin preferencia</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Classes="label" Text="Dirección *"/>
+                    <TextBox x:Name="E_Direccion" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="60"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="Step2" IsVisible="False">
+                <TextBlock Classes="section" Text="PASO 2 · DATOS DEL ACUDIENTE"/>
+                <Grid ColumnDefinitions="*,14,*">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Classes="label" Text="Parentesco con el estudiante *"/>
+                        <ComboBox x:Name="A_Parentesco" HorizontalAlignment="Stretch" SelectionChanged="OnParentescoChanged">
+                            <ComboBoxItem>Madre</ComboBoxItem>
+                            <ComboBoxItem>Padre</ComboBoxItem>
+                            <ComboBoxItem>Abuelo/a</ComboBoxItem>
+                            <ComboBoxItem>Tío/a</ComboBoxItem>
+                            <ComboBoxItem>Otro</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Classes="label" Text="DUI *"/>
+                        <TextBox x:Name="A_Dui"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel x:Name="A_OtroPanel" IsVisible="False" Margin="0,10,0,0">
+                    <TextBlock Classes="label" Text="Especifica el parentesco *"/>
+                    <TextBox x:Name="A_OtroParentesco"/>
+                </StackPanel>
+                <Grid ColumnDefinitions="*,14,*" Margin="0,10,0,0">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Classes="label" Text="Nombres *"/>
+                        <TextBox x:Name="A_Nombres"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Classes="label" Text="Apellidos *"/>
+                        <TextBox x:Name="A_Apellidos"/>
+                    </StackPanel>
+                </Grid>
+                <Grid ColumnDefinitions="*,14,*" Margin="0,10,0,0">
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Classes="label" Text="Teléfono *"/>
+                        <TextBox x:Name="A_Telefono"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Classes="label" Text="Correo electrónico"/>
+                        <TextBox x:Name="A_Correo"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Classes="label" Text="Lugar de trabajo"/>
+                    <TextBox x:Name="A_Trabajo"/>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Classes="label" Text="Dirección laboral"/>
+                    <TextBox x:Name="A_DireccionLaboral" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="50"/>
+                </StackPanel>
+
+                <ToggleSwitch x:Name="A_Recoger" IsChecked="True" Margin="0,8,0,0"
+                              OnContent="Autorizo recoger al estudiante a la salida"
+                              OffContent="Autorizo recoger al estudiante a la salida"/>
+                <ToggleSwitch x:Name="A_Emergencia" IsChecked="True" IsCheckedChanged="OnEmergenciaChanged"
+                              OnContent="Soy contacto de emergencia principal"
+                              OffContent="Soy contacto de emergencia principal"/>
+                <StackPanel x:Name="A_PrioridadPanel" Margin="0,6,0,0">
+                    <TextBlock Classes="label" Text="Prioridad de contacto"/>
+                    <ComboBox x:Name="A_Prioridad" Width="120" HorizontalAlignment="Left">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>3</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="Step3" IsVisible="False">
+                <TextBlock Classes="section" Text="PASO 3 · DOCUMENTOS PRESENTADOS"/>
+                <TextBlock Text="Marca los documentos entregados (opcional para esta práctica)."
+                           FontSize="12" Foreground="#6B6B6B" Margin="0,0,0,8"/>
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                    <CheckBox Grid.Row="0" Grid.Column="0" x:Name="D1" Content="Partida de nacimiento"/>
+                    <CheckBox Grid.Row="0" Grid.Column="1" x:Name="D2" Content="Foto tamaño carnet"/>
+                    <CheckBox Grid.Row="1" Grid.Column="0" x:Name="D3" Content="Constancia último año aprobado"/>
+                    <CheckBox Grid.Row="1" Grid.Column="1" x:Name="D4" Content="Tarjeta de vacunas al día"/>
+                    <CheckBox Grid.Row="2" Grid.Column="0" x:Name="D5" Content="Copia de DUI del acudiente"/>
+                    <CheckBox Grid.Row="2" Grid.Column="1" x:Name="D6" Content="Constancia de solvencia"/>
+                    <CheckBox Grid.Row="3" Grid.Column="0" x:Name="D7" Content="Comprobante de domicilio"/>
+                    <CheckBox Grid.Row="3" Grid.Column="1" x:Name="D8" Content="Boletín de notas anterior"/>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel x:Name="Step4" IsVisible="False">
+                <TextBlock Classes="section" Text="PASO 4 · CONFIRMACIÓN"/>
+                <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="16">
+                    <TextBlock x:Name="ResumenText" TextWrapping="Wrap" FontSize="13" LineHeight="22"/>
+                </Border>
+            </StackPanel>
+
+            <Border x:Name="StatusBox" IsVisible="False" CornerRadius="4" Padding="12,9" Margin="0,12,0,0">
+                <TextBlock x:Name="StatusText" TextWrapping="Wrap" FontWeight="SemiBold"/>
+            </Border>
+
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="0,18,0,0">
+                <Button Grid.Column="0" x:Name="BtnAnterior" Content="‹ Anterior" Click="OnAnterior"/>
+                <Button Grid.Column="2" Content="Cancelar" Margin="0,0,10,0" Click="OnCancelar"/>
+                <Button Grid.Column="3" x:Name="BtnSiguiente" Content="Siguiente ›" Classes="primary" Click="OnSiguiente"/>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
